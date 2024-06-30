@@ -1,0 +1,651 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="小冰">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="打印出如下格式的乘法表 1234567891*1&#x3D;11*2&#x3D;2   2*2&#x3D;41*3&#x3D;3   2*3&#x3D;6   3*3&#x3D;91*4&#x3D;4   2*4&#x3D;8   3*4&#x3D;12  4*4&#x3D;161*5&#x3D;5   2*5&#x3D;10  3*5&#x3D;15  4*5&#x3D;20  5*5&#x3D;251*6&#x3D;6   2*6&#x3D;12  3*6&#x3D;18  4*6&#x3D;24  5*6&#x3D;30  6*6&#x3D;361*7&#x3D;7   2*7&#x3D;14  3*7&#x3D;21  4*">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 实战——打印99乘法表">
+<meta property="og:url" content="https://ice-water.store/2024/05/03/zy1_0ILFp/index.html">
+<meta property="og:site_name" content="小艺术家">
+<meta property="og:description" content="打印出如下格式的乘法表 1234567891*1&#x3D;11*2&#x3D;2   2*2&#x3D;41*3&#x3D;3   2*3&#x3D;6   3*3&#x3D;91*4&#x3D;4   2*4&#x3D;8   3*4&#x3D;12  4*4&#x3D;161*5&#x3D;5   2*5&#x3D;10  3*5&#x3D;15  4*5&#x3D;20  5*5&#x3D;251*6&#x3D;6   2*6&#x3D;12  3*6&#x3D;18  4*6&#x3D;24  5*6&#x3D;30  6*6&#x3D;361*7&#x3D;7   2*7&#x3D;14  3*7&#x3D;21  4*">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-05-03T12:28:00.000Z">
+<meta property="article:modified_time" content="2024-05-03T12:28:26.000Z">
+<meta property="article:author" content="小冰">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Python 实战——打印99乘法表 - 小艺术家</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"ice-water.store","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>小艺术家</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>主页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>合集</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Python 实战——打印99乘法表"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-05-03 20:28" pubdate>
+          May 3, 2024 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          808 words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          7 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Python 实战——打印99乘法表</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>打印出如下格式的乘法表</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-number">1</span>*<span class="hljs-number">1</span>=<span class="hljs-number">1</span><br><span class="hljs-number">1</span>*<span class="hljs-number">2</span>=<span class="hljs-number">2</span>   <span class="hljs-number">2</span>*<span class="hljs-number">2</span>=<span class="hljs-number">4</span><br><span class="hljs-number">1</span>*<span class="hljs-number">3</span>=<span class="hljs-number">3</span>   <span class="hljs-number">2</span>*<span class="hljs-number">3</span>=<span class="hljs-number">6</span>   <span class="hljs-number">3</span>*<span class="hljs-number">3</span>=<span class="hljs-number">9</span><br><span class="hljs-number">1</span>*<span class="hljs-number">4</span>=<span class="hljs-number">4</span>   <span class="hljs-number">2</span>*<span class="hljs-number">4</span>=<span class="hljs-number">8</span>   <span class="hljs-number">3</span>*<span class="hljs-number">4</span>=<span class="hljs-number">12</span>  <span class="hljs-number">4</span>*<span class="hljs-number">4</span>=<span class="hljs-number">16</span><br><span class="hljs-number">1</span>*<span class="hljs-number">5</span>=<span class="hljs-number">5</span>   <span class="hljs-number">2</span>*<span class="hljs-number">5</span>=<span class="hljs-number">10</span>  <span class="hljs-number">3</span>*<span class="hljs-number">5</span>=<span class="hljs-number">15</span>  <span class="hljs-number">4</span>*<span class="hljs-number">5</span>=<span class="hljs-number">20</span>  <span class="hljs-number">5</span>*<span class="hljs-number">5</span>=<span class="hljs-number">25</span><br><span class="hljs-number">1</span>*<span class="hljs-number">6</span>=<span class="hljs-number">6</span>   <span class="hljs-number">2</span>*<span class="hljs-number">6</span>=<span class="hljs-number">12</span>  <span class="hljs-number">3</span>*<span class="hljs-number">6</span>=<span class="hljs-number">18</span>  <span class="hljs-number">4</span>*<span class="hljs-number">6</span>=<span class="hljs-number">24</span>  <span class="hljs-number">5</span>*<span class="hljs-number">6</span>=<span class="hljs-number">30</span>  <span class="hljs-number">6</span>*<span class="hljs-number">6</span>=<span class="hljs-number">36</span><br><span class="hljs-number">1</span>*<span class="hljs-number">7</span>=<span class="hljs-number">7</span>   <span class="hljs-number">2</span>*<span class="hljs-number">7</span>=<span class="hljs-number">14</span>  <span class="hljs-number">3</span>*<span class="hljs-number">7</span>=<span class="hljs-number">21</span>  <span class="hljs-number">4</span>*<span class="hljs-number">7</span>=<span class="hljs-number">28</span>  <span class="hljs-number">5</span>*<span class="hljs-number">7</span>=<span class="hljs-number">35</span>  <span class="hljs-number">6</span>*<span class="hljs-number">7</span>=<span class="hljs-number">42</span>  <span class="hljs-number">7</span>*<span class="hljs-number">7</span>=<span class="hljs-number">49</span><br><span class="hljs-number">1</span>*<span class="hljs-number">8</span>=<span class="hljs-number">8</span>   <span class="hljs-number">2</span>*<span class="hljs-number">8</span>=<span class="hljs-number">16</span>  <span class="hljs-number">3</span>*<span class="hljs-number">8</span>=<span class="hljs-number">24</span>  <span class="hljs-number">4</span>*<span class="hljs-number">8</span>=<span class="hljs-number">32</span>  <span class="hljs-number">5</span>*<span class="hljs-number">8</span>=<span class="hljs-number">40</span>  <span class="hljs-number">6</span>*<span class="hljs-number">8</span>=<span class="hljs-number">48</span>  <span class="hljs-number">7</span>*<span class="hljs-number">8</span>=<span class="hljs-number">56</span>  <span class="hljs-number">8</span>*<span class="hljs-number">8</span>=<span class="hljs-number">64</span><br><span class="hljs-number">1</span>*<span class="hljs-number">9</span>=<span class="hljs-number">9</span>   <span class="hljs-number">2</span>*<span class="hljs-number">9</span>=<span class="hljs-number">18</span>  <span class="hljs-number">3</span>*<span class="hljs-number">9</span>=<span class="hljs-number">27</span>  <span class="hljs-number">4</span>*<span class="hljs-number">9</span>=<span class="hljs-number">36</span>  <span class="hljs-number">5</span>*<span class="hljs-number">9</span>=<span class="hljs-number">45</span>  <span class="hljs-number">6</span>*<span class="hljs-number">9</span>=<span class="hljs-number">54</span>  <span class="hljs-number">7</span>*<span class="hljs-number">9</span>=<span class="hljs-number">63</span>  <span class="hljs-number">8</span>*<span class="hljs-number">9</span>=<span class="hljs-number">72</span>  <span class="hljs-number">9</span>*<span class="hljs-number">9</span>=<span class="hljs-number">81</span><br></code></pre></td></tr></table></figure>
+
+<p>一共有10 行，第<code>i</code>行的第<code>j</code>列等于：<code>j*i</code>，</p>
+<p>其中,</p>
+<p><code>i</code>取值范围：<code>1&lt;=i&lt;=9</code></p>
+<p><code>j</code>取值范围：<code>1&lt;=j&lt;=i</code></p>
+<p>根据<code>例子分析</code>的语言描述，转化为如下代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">10</span>):<br>    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, i+<span class="hljs-number">1</span>):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;%d * %d = %d&#x27;</span> % (j, i, j * i) , end=<span class="hljs-string">&quot;\t&quot;</span>)<br>    <span class="hljs-built_in">print</span>()<br></code></pre></td></tr></table></figure>
+
+<p>​	乘法表是初学者学习编程语言时经常练习的一个经典题目。它不仅能够帮助初学者熟悉循环结构，还能加深对字符串格式化和输出控制的理解。Python作为一种简洁而强大的编程语言，其语法的清晰性和灵活性使得编写乘法表变得非常直观和容易。</p>
+<p>​	在上述代码中，我们使用了两个嵌套的for循环来生成99乘法表。外层循环控制行数，从1遍历到9，代表乘法表的每一行；内层循环控制每行中的列数，从1遍历到当前行的行数，代表每行中的乘法表达式。通过print函数的end&#x3D;”\t”参数，我们能够在每个乘法表达式之后插入一个制表符，以此来对齐输出，使得乘法表的格式更加整齐美观。</p>
+<p>​	此外，代码中使用了Python的旧式字符串格式化方法%d，它允许我们指定输出的整数格式。虽然Python 3中推荐使用.format()方法或者f-string来进行字符串格式化，但%操作符因其简洁性在某些情况下依然被广泛使用。</p>
+<p>​	乘法表的实现虽然简单，但它却是一个展示编程语言特性和基础语法的绝佳例子。通过这个练习，初学者可以逐步建立起对编程逻辑和控制结构的认识，为后续更复杂编程任务打下坚实的基础。同时，这也是一个锻炼编程思维和提升代码组织能力的好机会。</p>
+<p>​	在编程学习的过程中，不断实践和思考是至关重要的。通过编写乘法表这样的基础程序，我们可以学习到如何将一个实际问题分解成小的、可管理的编程任务，并通过合理的代码结构来解决这些问题。这不仅仅是对编程语言特性的运用，更是对编程思维的培养。</p>
+<p>​	随着编程技能的提高，我们可以尝试用不同的方法来实现同一个功能，比如使用列表推导式、循环结合条件语句等，这样可以加深对语言特性的理解和应用，同时也能够提高代码的可读性和效率。不断探索和学习，是成为一名优秀程序员的必经之路！</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Python 实战——打印99乘法表</div>
+      <div>https://ice-water.store/2024/05/03/zy1_0ILFp/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>小冰</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>May 3, 2024</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/05/03/Ps9qOGb5c/" title="线程、进程和协程是什么">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">线程、进程和协程是什么</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/05/03/9DdbMrJeC/" title="一个简单的养生动作，每天只需10分钟，至少带来5个好处">
+                        <span class="hidden-mobile">一个简单的养生动作，每天只需10分钟，至少带来5个好处</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"jpaxT7mvSFxI0GVjn4bEq9VO-gzGzoHsz","appKey":"s8xzIh2XvxyjRbyDXcL0vfPu","path":"window.location.pathname","placeholder":"请在这里输入评论","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":true,"serverURLs":"https://jpaxt7mv.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://ice-water.store/" target="_blank" rel="nofollow noopener"><span>小艺术家</span></a> <i class="iconfont icon-love"></i> <a href="https://ice-water.store/" target="_blank" rel="nofollow noopener"><span>版权所有</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
