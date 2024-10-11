@@ -1,0 +1,667 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/bilicard.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="小冰">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="用 FFmpeg 将图片转化为视频并添加音频的实用指南 引言：&emsp;&emsp;在多媒体制作领域，将静态图片转化为视频是一种常见的需求。无论是为了创建幻灯片、社交媒体内容还是其他视频项目，掌握这一技能都是非常有价值的。FFmpeg 是一款功能强大的工具，它可以帮助我们轻松实现这一过程。本文将详细介绍如何使用 FFmpeg 将图片转换为视频，并添加音频流，以创建更加丰富的多媒体内容。 第一部分">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用 FFmpeg 将图片转化为视频并添加音频的实用指南">
+<meta property="og:url" content="https://ice-water.store/2024/09/29/2024-09-29-FFmpeg/index.html">
+<meta property="og:site_name" content="小艺术家">
+<meta property="og:description" content="用 FFmpeg 将图片转化为视频并添加音频的实用指南 引言：&emsp;&emsp;在多媒体制作领域，将静态图片转化为视频是一种常见的需求。无论是为了创建幻灯片、社交媒体内容还是其他视频项目，掌握这一技能都是非常有价值的。FFmpeg 是一款功能强大的工具，它可以帮助我们轻松实现这一过程。本文将详细介绍如何使用 FFmpeg 将图片转换为视频，并添加音频流，以创建更加丰富的多媒体内容。 第一部分">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-09-29T14:56:39.000Z">
+<meta property="article:modified_time" content="2024-09-29T03:20:38.000Z">
+<meta property="article:author" content="小冰">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>用 FFmpeg 将图片转化为视频并添加音频的实用指南 - 小艺术家</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"ice-water.store","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>小艺术家</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>主页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>合集</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="用 FFmpeg 将图片转化为视频并添加音频的实用指南"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-09-29 22:56" pubdate>
+          September 29, 2024 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          9 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">用 FFmpeg 将图片转化为视频并添加音频的实用指南</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><strong>用 FFmpeg 将图片转化为视频并添加音频的实用指南</strong></p>
+<p><strong>引言：</strong><br>&emsp;&emsp;在多媒体制作领域，将静态图片转化为视频是一种常见的需求。无论是为了创建幻灯片、社交媒体内容还是其他视频项目，掌握这一技能都是非常有价值的。FFmpeg 是一款功能强大的工具，它可以帮助我们轻松实现这一过程。本文将详细介绍如何使用 FFmpeg 将图片转换为视频，并添加音频流，以创建更加丰富的多媒体内容。</p>
+<p><strong>第一部分：FFmpeg 简介</strong><br>&emsp;&emsp;FFmpeg 是一个开源项目，提供了一系列用于处理视频和音频的命令行工具。它支持多种音视频格式的转换、录制、转流和播放。FFmpeg 的强大之处在于其灵活性和广泛的格式支持，使其成为多媒体专业人士和爱好者的首选工具。</p>
+<p><strong>第二部分：将图片转换为视频</strong><br>&emsp;&emsp;在这一节中，我们将介绍如何使用 FFmpeg 将一张静态图片转换为视频。这个过程非常简单，只需要一行命令即可完成。</p>
+<p>&emsp;&emsp;命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ffmpeg.exe -loop 1 -r 1 -t 60 -f image2 -i input.jpg -c:v libx264 -crf 24 -y SinglePictureVideo.mp4<br></code></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;这条命令的参数解释如下：</p>
+<ul>
+<li><code>-loop 1</code>：指定输入图像循环一次。</li>
+<li><code>-r 1</code>：设置帧率为每秒1帧，这意味着图片将以每秒一帧的速率播放。</li>
+<li><code>-t 60</code>：设置视频的时长为60秒，即1分钟。</li>
+<li><code>-f image2</code>：指定输入格式为图片。</li>
+<li><code>-i input.jpg</code>：指定输入图片文件的路径。</li>
+<li><code>-c:v libx264</code>：使用 libx264 编码器进行视频编码，这是一种广泛使用的 H.264 编码器。</li>
+<li><code>-crf 24</code>：设置恒定速率因子（Constant Rate Factor）为24，这个值越低，视频质量越高，但文件大小也越大。</li>
+<li><code>-y</code>：如果输出文件已存在，则覆盖它而不提示确认。</li>
+<li><code>SinglePictureVideo.mp4</code>：指定输出视频文件的名称。</li>
+</ul>
+<p>&emsp;&emsp;这个命令将创建一个时长为1分钟的视频，其中包含 <code>input.jpg</code> 图片，以每秒一帧的速率播放。</p>
+<p><strong>第三部分：添加音频流</strong><br>&emsp;&emsp;在许多情况下，我们不仅希望将图片转换为视频，还希望添加音频流以增强观看体验。FFmpeg 同样可以轻松实现这一需求。</p>
+<p>&emsp;&emsp;命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ffmpeg.exe -loop 1 -r 1 -f image2 -i input.jpg -i audio.mp3 -c:v libx264 -crf 24 -c:a copy -y SinglePictureVideo.mp4<br></code></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;这条命令在之前的基础上增加了 <code>-i audio.mp3</code> 参数，指定了输入音频文件的路径。<code>-c:a copy</code> 参数告诉 FFmpeg 复制音频流而不进行重新编码，这样可以保持音频的原始质量。</p>
+<p><strong>第四部分：解决尺寸问题</strong><br>&emsp;&emsp;在将图片转换为视频时，可能会遇到图片尺寸不符合视频编码器要求的问题。例如，许多编码器要求视频的宽度和高度必须是2的倍数。在这种情况下，我们可以使用 FFmpeg 的过滤器来调整图片尺寸。</p>
+<p><strong>第五部分：高级技巧</strong><br>&emsp;&emsp;FFmpeg 提供了许多高级过滤器和选项，可以用来调整视频的宽高比、裁剪、缩放等。这些高级技巧可以帮助我们实现更复杂的视频处理任务。</p>
+<p><strong>结论：</strong><br>&emsp;&emsp;FFmpeg 是一个功能强大的工具，可以帮助我们轻松地将静态图片转换为视频，并添加音频流。通过简单的命令，即使是初学者也能创造出专业的多媒体内容。本文介绍的技巧和命令只是 FFmpeg 强大功能的冰山一角，更多的探索和实践将带您进入更广阔的多媒体处理世界。</p>
+<p><strong>结语：</strong><br>&emsp;&emsp;希望这篇文章能帮助您更好地理解和使用 FFmpeg。如果您有任何问题或需要进一步的帮助，请随时告诉我。</p>
+<p>&emsp;&emsp;未经许可，禁止转载</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>用 FFmpeg 将图片转化为视频并添加音频的实用指南</div>
+      <div>https://ice-water.store/2024/09/29/2024-09-29-FFmpeg/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>小冰</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>September 29, 2024</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/09/29/2024-09-29-read/" title="【幸福公益读书会 第51期】|| 智慧人生系列--认识自我的意义（中）（送审稿）">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">【幸福公益读书会 第51期】|| 智慧人生系列--认识自我的意义（中）（送审稿）</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/09/26/2024-09-26-dog/" title="般若寺的守护者：狗的故事（无图模式）">
+                        <span class="hidden-mobile">般若寺的守护者：狗的故事（无图模式）</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"jpaxT7mvSFxI0GVjn4bEq9VO-gzGzoHsz","appKey":"s8xzIh2XvxyjRbyDXcL0vfPu","path":"window.location.pathname","placeholder":"请在这里输入评论","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":true,"serverURLs":"https://jpaxt7mv.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://ice-water.store/" target="_blank" rel="nofollow noopener"><span>小艺术家</span></a> <i class="iconfont icon-love"></i> <a href="https://ice-water.store/" target="_blank" rel="nofollow noopener"><span>版权所有</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
