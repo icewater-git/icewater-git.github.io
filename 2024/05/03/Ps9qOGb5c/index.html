@@ -1,0 +1,716 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/bilicard.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="小冰">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="线程、进程和协程是什么线程、进程和协程的详细概念解释和原理剖析不是本文的重点，本文重点讲述在Python中怎样实际使用这三种东西，因此此处引用其他朋友的文章仅粗略地讲解一下这三种东西（想要了解更多，请参看引用的文章）：  参考： 进程、线程、协程之概念理解  进程（Process）是计算机中的程序关于某数据集合上的一次运行活动，是系统进行资源分配和调度的基本单位，是操作系统结构的基础。 线程，有时">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线程、进程和协程是什么">
+<meta property="og:url" content="https://ice-water.store/2024/05/03/Ps9qOGb5c/index.html">
+<meta property="og:site_name" content="小艺术家">
+<meta property="og:description" content="线程、进程和协程是什么线程、进程和协程的详细概念解释和原理剖析不是本文的重点，本文重点讲述在Python中怎样实际使用这三种东西，因此此处引用其他朋友的文章仅粗略地讲解一下这三种东西（想要了解更多，请参看引用的文章）：  参考： 进程、线程、协程之概念理解  进程（Process）是计算机中的程序关于某数据集合上的一次运行活动，是系统进行资源分配和调度的基本单位，是操作系统结构的基础。 线程，有时">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-05-03T14:12:52.000Z">
+<meta property="article:modified_time" content="2024-05-03T14:13:24.000Z">
+<meta property="article:author" content="小冰">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>线程、进程和协程是什么 - 小艺术家</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"ice-water.store","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<!-- hexo injector head_end start --><script> let HEXO_MMEDIA_DATA = { js: [], css: [], aplayerData: [], metingData: [], artPlayerData: [], dplayerData: []}; </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>小艺术家</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>主页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>合集</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="线程、进程和协程是什么"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-05-03 22:12" pubdate>
+          May 3, 2024 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.5k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          29 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">线程、进程和协程是什么</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="线程、进程和协程是什么"><a href="#线程、进程和协程是什么" class="headerlink" title="线程、进程和协程是什么"></a>线程、进程和协程是什么</h2><p>线程、进程和协程的详细概念解释和原理剖析不是本文的重点，本文重点讲述在Python中怎样实际使用这三种东西，因此此处引用其他朋友的文章仅粗略地讲解一下这三种东西（想要了解更多，请参看引用的文章）：</p>
+<blockquote>
+<p>参考： <a target="_blank" rel="noopener" href="http://www.cnblogs.com/work115/p/5620272.html">进程、线程、协程之概念理解</a></p>
+<ul>
+<li>进程（Process）是计算机中的程序关于某数据集合上的一次运行活动，是系统进行资源分配和调度的基本单位，是操作系统结构的基础。</li>
+<li>线程，有时被称为轻量级进程(Lightweight Process，LWP），是程序执行流的最小单元。</li>
+<li>协程：一个程序可以包含多个协程，可以对比于一个进程包含多个线程，因而下面我们来比较协程和线程：我们知道多个线程相对独立，有自己的上下文，切换受系统控制；而协程也相对独立，有自己的上下文，但是其切换由自己控制，由当前协程切换到其他协程由当前协程来控制。</li>
+</ul>
+</blockquote>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>磨刀不误砍柴工，在用实例讲解线程、进程和协程怎么使用之前，先准备一些工具：</p>
+<ul>
+<li>实际上多线程、多进程和协程，都属于并发编程，并发编程的最重要的目标就是提高程序运行的效率，那么我们需要一个计算一个函数耗时长度的工具，用于对比不同方式程序的运行时间，这里我们写一个函数计时装饰器<code>fn_timer</code>来完成这件事：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">fn_timer</span>(<span class="hljs-params">function</span>):<br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    函数计时装饰器</span><br><span class="hljs-string">    :param function: 函数对象</span><br><span class="hljs-string">    :return: 装饰器</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br><span class="hljs-meta">    @wraps(<span class="hljs-params">function</span>)</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">function_timer</span>(<span class="hljs-params">*args,**kwargs</span>):<br>        <span class="hljs-comment"># 起始时间</span><br>        t0 = time.time()<br>        <span class="hljs-comment"># 调用函数</span><br>        result = function(*args,**kwargs)<br>        <span class="hljs-comment"># 结束时间</span><br>        t1 = time.time()<br>        <span class="hljs-comment"># 打印函数耗时</span><br>        <span class="hljs-built_in">print</span> <span class="hljs-string">&#x27;[finished function:&#123;func_name&#125; in &#123;time:.2f&#125;s]&#x27;</span>.<span class="hljs-built_in">format</span>(func_name = function.__name__,time = t1 - t0)<br>        <span class="hljs-keyword">return</span> result<br>    <span class="hljs-keyword">return</span> function_timer<br></code></pre></td></tr></table></figure>
+
+<p>该装饰器的用法示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 测试</span><br><span class="hljs-meta">@fn_timer</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">add</span>(<span class="hljs-params">x,y</span>):<br>    time.sleep(<span class="hljs-number">1.22</span>)<br>    <span class="hljs-keyword">return</span> x + y<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    <span class="hljs-comment"># 测试</span><br>    <span class="hljs-built_in">sum</span> = add(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>)<br>    <span class="hljs-built_in">print</span> <span class="hljs-built_in">sum</span><br></code></pre></td></tr></table></figure>
+
+<p>运行代码输出：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">[finished <span class="hljs-keyword">function</span>:<span class="hljs-built_in">test</span> <span class="hljs-keyword">in</span> 1.23s]<br>3<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>实际使用中，大规模爬虫程序很适合用并发来实现，所以我们再准备一些网址放在<code>urls</code>列表中，用于测试爬虫程序的效率（都是百度百科的一些词条页面）：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 20个网页</span><br>urls = [<span class="hljs-string">&#x27;https://baike.baidu.com/item/%E8%87%AA%E7%94%B1%E8%BD%AF%E4%BB%B6&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/%E5%9F%BA%E9%87%91%E4%BC%9A&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/%E5%88%9B%E6%96%B02.0&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/%E5%95%86%E4%B8%9A%E8%BD%AF%E4%BB%B6&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/%E5%BC%80%E6%94%BE%E6%BA%90%E4%BB%A3%E7%A0%81&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/OpenBSD&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/%E8%A7%A3%E9%87%8A%E5%99%A8&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/%E7%A8%8B%E5%BA%8F/71525&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/C%2B%2B&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/%E8%B7%A8%E5%B9%B3%E5%8F%B0&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/Web/150564&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/%E7%88%B1%E5%A5%BD%E8%80%85&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/%E6%95%99%E5%AD%A6&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/Unix%20shell&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/TIOBE&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/%E8%AF%BE%E7%A8%8B&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/MATLAB&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/Perl&#x27;</span>]<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>整合：把函数计时装饰器和urls列表封装在一个类：<code>utils.py</code>中：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># coding:utf-8</span><br><span class="hljs-keyword">from</span> functools <span class="hljs-keyword">import</span> wraps<br><span class="hljs-keyword">import</span> time<br><br><span class="hljs-comment"># 20个网页</span><br>urls = [<span class="hljs-string">&#x27;https://baike.baidu.com/item/%E8%87%AA%E7%94%B1%E8%BD%AF%E4%BB%B6&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/%E5%9F%BA%E9%87%91%E4%BC%9A&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/%E5%88%9B%E6%96%B02.0&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/%E5%95%86%E4%B8%9A%E8%BD%AF%E4%BB%B6&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/%E5%BC%80%E6%94%BE%E6%BA%90%E4%BB%A3%E7%A0%81&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/OpenBSD&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/%E8%A7%A3%E9%87%8A%E5%99%A8&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/%E7%A8%8B%E5%BA%8F/71525&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/C%2B%2B&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/%E8%B7%A8%E5%B9%B3%E5%8F%B0&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/Web/150564&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/%E7%88%B1%E5%A5%BD%E8%80%85&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/%E6%95%99%E5%AD%A6&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/Unix%20shell&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/TIOBE&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/%E8%AF%BE%E7%A8%8B&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/MATLAB&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://baike.baidu.com/item/Perl&#x27;</span>]<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">fn_timer</span>(<span class="hljs-params">function</span>):<br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    函数计时装饰器</span><br><span class="hljs-string">    :param function: 函数对象</span><br><span class="hljs-string">    :return: 装饰器</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br><span class="hljs-meta">    @wraps(<span class="hljs-params">function</span>)</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">function_timer</span>(<span class="hljs-params">*args,**kwargs</span>):<br>        <span class="hljs-comment"># 起始时间</span><br>        t0 = time.time()<br>        <span class="hljs-comment"># 调用函数</span><br>        result = function(*args,**kwargs)<br>        <span class="hljs-comment"># 结束时间</span><br>        t1 = time.time()<br>        <span class="hljs-comment"># 打印函数耗时</span><br>        <span class="hljs-built_in">print</span> <span class="hljs-string">&#x27;[finished function:&#123;func_name&#125; in &#123;time:.2f&#125;s]&#x27;</span>.<span class="hljs-built_in">format</span>(func_name = function.__name__,time = t1 - t0)<br>        <span class="hljs-keyword">return</span> result<br>    <span class="hljs-keyword">return</span> function_timer<br><br><span class="hljs-comment"># 测试</span><br><span class="hljs-meta">@fn_timer</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">add</span>(<span class="hljs-params">x,y</span>):<br>    time.sleep(<span class="hljs-number">1.22</span>)<br>    <span class="hljs-keyword">return</span> x + y<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    <span class="hljs-comment"># 测试</span><br>    <span class="hljs-built_in">sum</span> = add(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>)<br>    <span class="hljs-built_in">print</span> <span class="hljs-built_in">sum</span><br>    <span class="hljs-comment"># 输出：</span><br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    [finished function:test in 1.23s]</span><br><span class="hljs-string">    3</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="实例讲解多线程的用法"><a href="#实例讲解多线程的用法" class="headerlink" title="实例讲解多线程的用法"></a>实例讲解多线程的用法</h2><h3 id="从听音乐、看电影讲起"><a href="#从听音乐、看电影讲起" class="headerlink" title="从听音乐、看电影讲起"></a>从听音乐、看电影讲起</h3><p>我现在要做两件事情：听音乐、看电影，听一首音乐假如耗时1秒，看一部电影假如耗时5秒，用两个函数定义这两个任务如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 耗时任务：听音乐</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">music</span>(<span class="hljs-params">name</span>):<br>    <span class="hljs-built_in">print</span> <span class="hljs-string">&#x27;I am listening to music &#123;0&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(name)<br>    time.sleep(<span class="hljs-number">1</span>)<br><br><span class="hljs-comment"># 耗时任务：看电影</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">movie</span>(<span class="hljs-params">name</span>):<br>    <span class="hljs-built_in">print</span> <span class="hljs-string">&#x27;I am watching movie &#123;0&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(name)<br>    time.sleep(<span class="hljs-number">5</span>)<br></code></pre></td></tr></table></figure>
+
+<p>假如我现在要听10首音乐、看2部电影，那么我就有如下几种方案：</p>
+<ul>
+<li>方案一：先一个个听完10首音乐，再一个个看完2部电影，顺序完成，代码如下：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 单线程操作：顺序执行听10首音乐，看2部电影</span><br><span class="hljs-meta">@fn_timer</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">single_thread</span>():<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>):<br>        music(i)<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>):<br>        movie(i)<br></code></pre></td></tr></table></figure>
+
+<p>让我们执行一下这段代码，输出如下：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">I</span> am listening <span class="hljs-selector-tag">to</span> music <span class="hljs-number">0</span><br><span class="hljs-selector-tag">I</span> am listening <span class="hljs-selector-tag">to</span> music <span class="hljs-number">1</span><br><span class="hljs-selector-tag">I</span> am listening <span class="hljs-selector-tag">to</span> music <span class="hljs-number">2</span><br><span class="hljs-selector-tag">I</span> am listening <span class="hljs-selector-tag">to</span> music <span class="hljs-number">3</span><br><span class="hljs-selector-tag">I</span> am listening <span class="hljs-selector-tag">to</span> music <span class="hljs-number">4</span><br><span class="hljs-selector-tag">I</span> am listening <span class="hljs-selector-tag">to</span> music <span class="hljs-number">5</span><br><span class="hljs-selector-tag">I</span> am listening <span class="hljs-selector-tag">to</span> music <span class="hljs-number">6</span><br><span class="hljs-selector-tag">I</span> am listening <span class="hljs-selector-tag">to</span> music <span class="hljs-number">7</span><br><span class="hljs-selector-tag">I</span> am listening <span class="hljs-selector-tag">to</span> music <span class="hljs-number">8</span><br><span class="hljs-selector-tag">I</span> am listening <span class="hljs-selector-tag">to</span> music <span class="hljs-number">9</span><br><span class="hljs-selector-tag">I</span> am watching movie <span class="hljs-number">0</span><br><span class="hljs-selector-tag">I</span> am watching movie <span class="hljs-number">1</span><br><span class="hljs-selector-attr">[finished function:single_thread in 20.14s]</span><br></code></pre></td></tr></table></figure>
+
+<p>可以看到，老老实实严格按照先后顺序来一件件做这些事情，所需的总时间和每件事情耗时加起来是一样多的。</p>
+<ul>
+<li>方案二：刚刚的方案不太好，太费时间了，那么能不能同时进行一些事情呢？答案是可以的，可以同时听多首音乐，同时看多部电影进行，代码如下：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 多线程执行：听10首音乐，看2部电影</span><br><span class="hljs-meta">@fn_timer</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">multi_thread</span>():<br>    <span class="hljs-comment"># 线程列表</span><br>    threads = []<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>):<br>        <span class="hljs-comment"># 创建一个线程，target参数为任务处理函数，args为任务处理函数所需的参数元组</span><br>        threads.append(threading.Thread(target = music,args = (i,)))<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>):<br>        threads.append(threading.Thread(target = movie,args = (i,)))<br><br>    <span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> threads:<br>        <span class="hljs-comment"># 设为守护线程</span><br>        t.setDaemon(<span class="hljs-literal">True</span>)<br>        <span class="hljs-comment"># 开始线程</span><br>        t.start()<br>    <span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> threads:<br>        t.join()<br></code></pre></td></tr></table></figure>
+
+<p>执行上述代码，运行结果：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">I</span> am listening <span class="hljs-selector-tag">to</span> music <span class="hljs-number">0</span><br><span class="hljs-selector-tag">I</span> am listening <span class="hljs-selector-tag">to</span> music <span class="hljs-number">1</span><br><span class="hljs-selector-tag">I</span> am listening <span class="hljs-selector-tag">to</span> music <span class="hljs-number">2</span><br><span class="hljs-selector-tag">I</span> am listening <span class="hljs-selector-tag">to</span> music <span class="hljs-number">3</span><br><span class="hljs-selector-tag">I</span> am listening <span class="hljs-selector-tag">to</span> music <span class="hljs-number">4</span><br><span class="hljs-selector-tag">I</span> am listening <span class="hljs-selector-tag">to</span> music <span class="hljs-number">5</span><br><span class="hljs-selector-tag">I</span> am listening <span class="hljs-selector-tag">to</span> music <span class="hljs-number">6</span><br><span class="hljs-selector-tag">I</span> am listening <span class="hljs-selector-tag">to</span> music <span class="hljs-number">7</span><br><span class="hljs-selector-tag">I</span> am listening <span class="hljs-selector-tag">to</span> music <span class="hljs-number">8</span><br><span class="hljs-selector-tag">I</span> am listening <span class="hljs-selector-tag">to</span> music <span class="hljs-number">9</span><br><span class="hljs-selector-tag">I</span> am watching movie <span class="hljs-number">0</span><br><span class="hljs-selector-tag">I</span> am watching movie <span class="hljs-number">1</span><br><span class="hljs-selector-attr">[finished function:multi_thread in 5.02s]</span><br></code></pre></td></tr></table></figure>
+
+<p>这次只用了5秒就完成了，完成效率显著提升。这次试用多线程执行多个任务，所有任务最终的总耗时 &#x3D; 耗时最长的那个单个任务的耗时，即看一部电影的5秒钟时间。</p>
+<ul>
+<li>方案三：使用线程池。上面使用多线程的方式比较繁琐，下面使用线程池来实现：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 使用线程池执行：听10首音乐，看2部电影</span><br><span class="hljs-meta">@fn_timer</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">use_pool</span>():<br>    <span class="hljs-comment"># 设置线程池大小为20，如果不设置，默认值是CPU核心数</span><br>    pool = Pool(<span class="hljs-number">20</span>)<br>    pool.<span class="hljs-built_in">map</span>(movie,<span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>))<br>    pool.<span class="hljs-built_in">map</span>(music,<span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>))<br>    pool.close()<br>    pool.join()<br></code></pre></td></tr></table></figure>
+
+<p>执行结果：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">I</span> am listening <span class="hljs-selector-tag">to</span> music <span class="hljs-number">0</span><br><span class="hljs-selector-tag">I</span> am listening <span class="hljs-selector-tag">to</span> music <span class="hljs-number">1</span><br><span class="hljs-selector-tag">I</span> am listening <span class="hljs-selector-tag">to</span> music <span class="hljs-number">2</span><br><span class="hljs-selector-tag">I</span> am listening <span class="hljs-selector-tag">to</span> music <span class="hljs-number">3</span><br><span class="hljs-selector-tag">I</span> am listening <span class="hljs-selector-tag">to</span> music <span class="hljs-number">4</span><br><span class="hljs-selector-tag">I</span> am listening <span class="hljs-selector-tag">to</span> music <span class="hljs-number">5</span><br><span class="hljs-selector-tag">I</span> am listening <span class="hljs-selector-tag">to</span> music <span class="hljs-number">6</span><br><span class="hljs-selector-tag">I</span> am listening <span class="hljs-selector-tag">to</span> music <span class="hljs-number">7</span><br><span class="hljs-selector-tag">I</span> am listening <span class="hljs-selector-tag">to</span> music <span class="hljs-number">8</span><br><span class="hljs-selector-tag">I</span> am listening <span class="hljs-selector-tag">to</span> music <span class="hljs-number">9</span><br><span class="hljs-selector-tag">I</span> am watching movie <span class="hljs-number">0</span><br><span class="hljs-selector-tag">I</span> am watching movie <span class="hljs-number">1</span><br><span class="hljs-selector-attr">[finished function:use_pool in 6.12s]</span><br></code></pre></td></tr></table></figure>
+
+<p>可以看出使用线程池反而比手工调度线程多耗时一秒钟，可能是因为线程池内部对线程的调度和线程切换的耗时造成的。</p>
+<h3 id="实例：使用多线程下载网页"><a href="#实例：使用多线程下载网页" class="headerlink" title="实例：使用多线程下载网页"></a>实例：使用多线程下载网页</h3><p>话不多说，直接上代码，用多线程并发下载20个百度百科网页的实例代码及运行结果如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># coding:utf-8</span><br><span class="hljs-comment"># 测试多线程</span><br><span class="hljs-keyword">import</span> threading<br><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">from</span> utils <span class="hljs-keyword">import</span> fn_timer<br><span class="hljs-keyword">from</span> multiprocessing.dummy <span class="hljs-keyword">import</span> Pool<br><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">from</span> utils <span class="hljs-keyword">import</span> urls<br><br><span class="hljs-comment"># 应用：使用单线程下载多个网页的内容</span><br><span class="hljs-meta">@fn_timer</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">download_using_single_thread</span>(<span class="hljs-params">urls</span>):<br>    resps = []<br>    <span class="hljs-keyword">for</span> url <span class="hljs-keyword">in</span> urls:<br>        resp = requests.get(url)<br>        resps.append(resp)<br>    <span class="hljs-keyword">return</span> resps<br><br><span class="hljs-comment"># 应用：使用多线程下载多个网页的内容</span><br><span class="hljs-meta">@fn_timer</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">download_using_multi_thread</span>(<span class="hljs-params">urls</span>):<br>    threads = []<br>    <span class="hljs-keyword">for</span> url <span class="hljs-keyword">in</span> urls:<br>        threads.append(threading.Thread(target = requests.get,args = (url,)))<br>    <span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> threads:<br>        t.setDaemon(<span class="hljs-literal">True</span>)<br>        t.start()<br>    <span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> threads:<br>        t.join()<br><br><span class="hljs-comment"># 应用：使用线程池下载多个网页的内容</span><br><span class="hljs-meta">@fn_timer</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">download_using_pool</span>(<span class="hljs-params">urls</span>):<br>    pool = Pool(<span class="hljs-number">20</span>)<br>    <span class="hljs-comment"># 第一个参数为函数名，第二个参数一个可迭代对象，为函数所需的参数列表</span><br>    resps = pool.<span class="hljs-built_in">map</span>(requests.get,urls)<br>    pool.close()<br>    pool.join()<br>    <span class="hljs-keyword">return</span> resps<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    <span class="hljs-comment"># 1.使用单线程</span><br>    resps = download_using_single_thread(urls)<br>    <span class="hljs-built_in">print</span> <span class="hljs-built_in">len</span>(resps)<br>    <span class="hljs-comment"># 输出：</span><br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    [finished function:download_using_single_thread in 6.18s]</span><br><span class="hljs-string">    20</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br>    <span class="hljs-comment"># 2. 使用多线程</span><br>    download_using_multi_thread(urls)<br>    <span class="hljs-comment"># 输出：</span><br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    [finished function:download_using_multi_thread in 0.73s]</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br><br>    <span class="hljs-comment"># 3.使用线程池</span><br>    resps = download_using_pool(urls)<br>    <span class="hljs-built_in">print</span> <span class="hljs-built_in">len</span>(resps)<br>    <span class="hljs-comment"># 输出：</span><br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    [finished function:download_using_pool in 0.84s]</span><br><span class="hljs-string">    20</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    main()<br></code></pre></td></tr></table></figure>
+
+<h2 id="实例讲解多进程的用法"><a href="#实例讲解多进程的用法" class="headerlink" title="实例讲解多进程的用法"></a>实例讲解多进程的用法</h2><h3 id="多进程和进程池的使用"><a href="#多进程和进程池的使用" class="headerlink" title="多进程和进程池的使用"></a>多进程和进程池的使用</h3><p>实例代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># coding:utf-8</span><br><span class="hljs-comment"># 测试多进程</span><br><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">from</span> multiprocessing <span class="hljs-keyword">import</span> Process,Pool,Queue<br><span class="hljs-keyword">from</span> utils <span class="hljs-keyword">import</span> fn_timer<br><span class="hljs-keyword">import</span> random<br><br><span class="hljs-comment"># 简单的任务</span><br><span class="hljs-meta">@fn_timer</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">do_simple_task</span>(<span class="hljs-params">task_name</span>):<br>    <span class="hljs-built_in">print</span> <span class="hljs-string">&#x27;Run child process &#123;0&#125;, task name is: &#123;1&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(os.getpid(),task_name)<br>    time.sleep(<span class="hljs-number">1.2</span>)<br>    <span class="hljs-keyword">return</span> task_name<br><br><span class="hljs-meta">@fn_timer</span><br><span class="hljs-comment"># 1. 测试简单的多进程</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">test_simple_multi_process</span>():<br>    p1 = Process(target=do_simple_task, args=(<span class="hljs-string">&#x27;task1&#x27;</span>,))<br>    p2 = Process(target=do_simple_task, args=(<span class="hljs-string">&#x27;task2&#x27;</span>,))<br>    <span class="hljs-built_in">print</span> <span class="hljs-string">&#x27;Process will start...&#x27;</span><br>    p1.start()<br>    p2.start()<br>    p1.join()<br>    p2.join()<br>    <span class="hljs-built_in">print</span> <span class="hljs-string">&#x27;Process end.&#x27;</span><br><br><span class="hljs-meta">@fn_timer</span><br><span class="hljs-comment"># 2. 测试使用进程池</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">test_use_process_pool</span>():<br>    <span class="hljs-comment"># 创建一个进程池，数字表示一次性同时执行的最大子进程数</span><br>    pool = Pool(<span class="hljs-number">5</span>)<br>    <span class="hljs-comment"># 任务返回值列表</span><br>    results = []<br>    <span class="hljs-comment"># 任务名称列表</span><br>    task_names = []<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">7</span>):<br>        task_names.append(<span class="hljs-string">&#x27;task&#123;0&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(i))<br>    <span class="hljs-comment"># 并发执行多个任务，并获取任务返回值</span><br>    results = pool.map_async(do_simple_task,task_names)<br>    <span class="hljs-built_in">print</span> <span class="hljs-string">&#x27;Many processes will start...&#x27;</span><br>    pool.close()<br>    pool.join()<br><br>    <span class="hljs-built_in">print</span> <span class="hljs-string">&#x27;All processes end, results is: &#123;0&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(results.get())<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    test_simple_multi_process()<br>    <span class="hljs-comment"># 输出：</span><br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    Process will start...</span><br><span class="hljs-string">    Run child process 1524, task name is: task2</span><br><span class="hljs-string">    Run child process 1728, task name is: task1</span><br><span class="hljs-string">    [finished function:do_simple_task in 1.20s]</span><br><span class="hljs-string">    [finished function:do_simple_task in 1.20s]</span><br><span class="hljs-string">    Process end.</span><br><span class="hljs-string">    [finished function:test_simple_multi_process in 1.34s]</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br><br>    test_use_process_pool()<br>    <span class="hljs-comment"># 输出：</span><br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    Many processes will start...</span><br><span class="hljs-string">    Run child process 7568, task name is: task0</span><br><span class="hljs-string">    Run child process 7644, task name is: task1</span><br><span class="hljs-string">    Run child process 7628, task name is: task2</span><br><span class="hljs-string">    Run child process 7620, task name is: task3</span><br><span class="hljs-string">    Run child process 7660, task name is: task4</span><br><span class="hljs-string">    [finished function:do_simple_task in 1.20s]</span><br><span class="hljs-string">    Run child process 7568, task name is: task5</span><br><span class="hljs-string">    [finished function:do_simple_task in 1.20s]</span><br><span class="hljs-string">    Run child process 7644, task name is: task6</span><br><span class="hljs-string">    [finished function:do_simple_task in 1.20s]</span><br><span class="hljs-string">    [finished function:do_simple_task in 1.20s]</span><br><span class="hljs-string">    [finished function:do_simple_task in 1.20s]</span><br><span class="hljs-string">    [finished function:do_simple_task in 1.20s]</span><br><span class="hljs-string">    [finished function:do_simple_task in 1.20s]</span><br><span class="hljs-string">    All processes end, results is: [&#x27;task0&#x27;, &#x27;task1&#x27;, &#x27;task2&#x27;, &#x27;task3&#x27;, &#x27;task4&#x27;, &#x27;task5&#x27;, &#x27;task6&#x27;]</span><br><span class="hljs-string">    [finished function:test_use_process_pool in 2.62s]</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    main()<br></code></pre></td></tr></table></figure>
+
+<h3 id="进程之间的通信"><a href="#进程之间的通信" class="headerlink" title="进程之间的通信"></a>进程之间的通信</h3><p>进程间的通信采用队列来实现，实例代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># coding:utf-8</span><br><span class="hljs-comment"># 测试进程间的通信</span><br><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">from</span> multiprocessing <span class="hljs-keyword">import</span> Process,Pool,Queue<br><span class="hljs-keyword">from</span> utils <span class="hljs-keyword">import</span> fn_timer<br><span class="hljs-keyword">import</span> random<br><br><span class="hljs-comment"># 写进程执行的任务</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">write</span>(<span class="hljs-params">q</span>):<br>    <span class="hljs-keyword">for</span> value <span class="hljs-keyword">in</span> [<span class="hljs-string">&#x27;A&#x27;</span>,<span class="hljs-string">&#x27;B&#x27;</span>,<span class="hljs-string">&#x27;C&#x27;</span>]:<br>        <span class="hljs-built_in">print</span> <span class="hljs-string">&#x27;Put value: &#123;0&#125; to queue.&#x27;</span>.<span class="hljs-built_in">format</span>(value)<br>        q.put(value)<br>        time.sleep(random.random())<br><br><span class="hljs-comment"># 读进程执行的任务</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">read</span>(<span class="hljs-params">q</span>):<br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        value = q.get(<span class="hljs-literal">True</span>)<br>        <span class="hljs-built_in">print</span> <span class="hljs-string">&#x27;Get value: &#123;0&#125; from queue.&#x27;</span>.<span class="hljs-built_in">format</span>(value)<br><br><span class="hljs-comment"># 测试进程间的通信</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">test_communication_between_process</span>():<br>    q = Queue()<br>    <span class="hljs-comment"># 写进程</span><br>    pw = Process(target = write,args = (q,))<br>    <span class="hljs-comment"># 读进程</span><br>    pr = Process(target = read,args = (q,))<br>    pw.start()<br>    pr.start()<br>    pw.join()<br>    <span class="hljs-comment"># 因为读任务是死循环，所以要强行结束</span><br>    pr.terminate()<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    test_communication_between_process()<br>    <span class="hljs-comment"># 输出</span><br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    Put value: A to queue.</span><br><span class="hljs-string">    Get value: A from queue.</span><br><span class="hljs-string">    Put value: B to queue.</span><br><span class="hljs-string">    Get value: B from queue.</span><br><span class="hljs-string">    Put value: C to queue.</span><br><span class="hljs-string">    Get value: C from queue.</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    main()<br></code></pre></td></tr></table></figure>
+
+<h2 id="实例讲解协程的用法"><a href="#实例讲解协程的用法" class="headerlink" title="实例讲解协程的用法"></a>实例讲解协程的用法</h2><p>下面用协程下载同样的20个网页，实例代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># coding:utf-8</span><br><span class="hljs-comment"># 测试协程</span><br><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">import</span> gevent<br><span class="hljs-keyword">import</span> utils<br><span class="hljs-keyword">from</span> utils <span class="hljs-keyword">import</span> fn_timer<br><span class="hljs-keyword">from</span> gevent.pool <span class="hljs-keyword">import</span> Pool<br><span class="hljs-keyword">from</span> gevent <span class="hljs-keyword">import</span> monkey<br><span class="hljs-comment"># 打动态补丁，把标准库中的thread/socket等替换掉，让它们变成非阻塞的</span><br>monkey.patch_all()<br><br>session = requests.Session()<br>session.headers[<span class="hljs-string">&#x27;User-Agent&#x27;</span>] = <span class="hljs-string">&#x27;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.131 Safari/537.36&#x27;</span><br><br><span class="hljs-meta">@fn_timer</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">download_using_single_thread</span>(<span class="hljs-params">urls</span>):<br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    顺序执行下载多个网页</span><br><span class="hljs-string">    :param urls: 要下载的网页内容</span><br><span class="hljs-string">    :return: 响应列表</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br>    resps = []<br>    <span class="hljs-keyword">for</span> url <span class="hljs-keyword">in</span> urls:<br>        resps.append(session.get(url))<br>    <span class="hljs-keyword">return</span> resps<br><br><span class="hljs-meta">@fn_timer</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">download_using_coroutine</span>(<span class="hljs-params">urls</span>):<br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    使用协程下载</span><br><span class="hljs-string">    :param urls: 要下载的网页内容</span><br><span class="hljs-string">    :return: 响应列表</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br>    spawns = []<br>    <span class="hljs-keyword">for</span> url <span class="hljs-keyword">in</span> urls:<br>        spawns.append(gevent.spawn(session.get,url))<br>    <span class="hljs-comment"># 在遇到IO操作时，gevent会自动切换，并发执行（异步IO）</span><br>    gevent.joinall(spawns)<br><br><span class="hljs-meta">@fn_timer</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">download_using_coroutine_pool</span>(<span class="hljs-params">urls</span>):<br>    <span class="hljs-comment"># 创建协程池，并设置最大并发量</span><br>    pool = Pool(<span class="hljs-number">20</span>)<br>    pool.<span class="hljs-built_in">map</span>(session.get,urls)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    <span class="hljs-comment"># 1.使用单线程下载20个网页</span><br>    download_using_single_thread(utils.urls)<br>    <span class="hljs-comment"># 输出：</span><br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    [finished function:download_using_single_thread in 1.83s]</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br><br>    <span class="hljs-comment"># 2.使用协程下载20个网页</span><br>    download_using_coroutine(utils.urls)<br>    <span class="hljs-comment"># 输出：</span><br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    [finished function:download_using_coroutine in 0.69s]</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br><br>    <span class="hljs-comment"># 3.使用协程池下载20个网页</span><br>    download_using_coroutine_pool(utils.urls)<br>    <span class="hljs-comment"># 输出：</span><br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    [finished function:download_using_coroutine_pool in 0.78s]</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    main()<br></code></pre></td></tr></table></figure>
+
+<p>可以发现，协程的效率也是非常高的。</p>
+<h2 id="多线程、多进程和协程并发效率的对比"><a href="#多线程、多进程和协程并发效率的对比" class="headerlink" title="多线程、多进程和协程并发效率的对比"></a>多线程、多进程和协程并发效率的对比</h2><p>下面分别使用线程池、进程池和协程池下载100个相同的网页，来对比其效率：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># coding:utf-8</span><br><span class="hljs-comment"># 对比多线程、多进程和协程下载网页</span><br><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">import</span> utils<br><span class="hljs-keyword">from</span> utils <span class="hljs-keyword">import</span> fn_timer<br><span class="hljs-keyword">from</span> multiprocessing.dummy <span class="hljs-keyword">import</span> Pool <span class="hljs-keyword">as</span> thread_pool<br><span class="hljs-keyword">from</span> multiprocessing <span class="hljs-keyword">import</span> Pool <span class="hljs-keyword">as</span> process_pool<br><span class="hljs-keyword">from</span> gevent.pool <span class="hljs-keyword">import</span> Pool <span class="hljs-keyword">as</span> gevent_pool<br><span class="hljs-keyword">from</span> gevent <span class="hljs-keyword">import</span> monkey<br><span class="hljs-comment"># 打动态补丁，把标准库中的thread/socket等替换掉，让它们变成非阻塞的</span><br>monkey.patch_all()<br><br>session = requests.Session()<br>session.headers[<span class="hljs-string">&#x27;User-Agent&#x27;</span>] = <span class="hljs-string">&#x27;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.131 Safari/537.36&#x27;</span><br><br><span class="hljs-comment"># 1. 使用线程池下载多个网页的内容</span><br><span class="hljs-meta">@fn_timer</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">download_using_thread_pool</span>(<span class="hljs-params">urls</span>):<br>    pool = thread_pool(<span class="hljs-number">100</span>)<br>    <span class="hljs-comment"># 第一个参数为函数名，第二个参数一个可迭代对象，为函数所需的参数列表</span><br>    resps = pool.<span class="hljs-built_in">map</span>(session.get,urls)<br>    pool.close()<br>    pool.join()<br>    <span class="hljs-keyword">return</span> resps<br><br><span class="hljs-comment"># 2. 测试使用进程池</span><br><span class="hljs-meta">@fn_timer</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">download_using_process_pool</span>(<span class="hljs-params">urls</span>):<br>    <span class="hljs-comment"># 创建一个进程池，数字表示一次性同时执行的最大子进程数</span><br>    pool = process_pool(<span class="hljs-number">100</span>)<br>    <span class="hljs-comment"># 任务返回值列表</span><br>    results = []<br>    <span class="hljs-comment"># 并发执行多个任务，并获取任务返回值</span><br>    results = pool.map_async(session.get,urls)<br>    pool.close()<br>    pool.join()<br>    <span class="hljs-keyword">return</span> results.get()<br><br><span class="hljs-comment"># 3. 使用协程池下载</span><br><span class="hljs-meta">@fn_timer</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">download_using_coroutine_pool</span>(<span class="hljs-params">urls</span>):<br>    <span class="hljs-comment"># 创建协程池，并设置最大并发量</span><br>    pool = gevent_pool(<span class="hljs-number">100</span>)<br>    pool.<span class="hljs-built_in">map</span>(session.get,urls)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    <span class="hljs-comment"># 1. 使用线程池下载100个网页</span><br>    download_using_thread_pool(utils.urls * <span class="hljs-number">5</span>)<br>    <span class="hljs-comment"># 输出：</span><br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    [finished function:download_using_thread_pool in 3.68s]</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br><br>    <span class="hljs-comment"># 2. 使用进程池下载100个网页</span><br>    download_using_process_pool(utils.urls * <span class="hljs-number">5</span>)<br>    <span class="hljs-comment"># 输出：</span><br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    卡死了</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br><br>    <span class="hljs-comment"># 3.使用协程池下载20个网页</span><br>    download_using_coroutine_pool(utils.urls * <span class="hljs-number">5</span>)<br>    <span class="hljs-comment"># 输出：</span><br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    [finished function:download_using_coroutine_pool in 3.46s]</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    main()<br></code></pre></td></tr></table></figure>
+
+<p>从结果来看，使用协程池的效率还是略高一点。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>线程、进程和协程是什么</div>
+      <div>https://ice-water.store/2024/05/03/Ps9qOGb5c/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>小冰</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>May 3, 2024</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/05/04/M7LnZvDF8/" title="turtle绘制漫天雪花">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">turtle绘制漫天雪花</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/05/03/zy1_0ILFp/" title="Python 实战——打印99乘法表">
+                        <span class="hidden-mobile">Python 实战——打印99乘法表</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"jpaxT7mvSFxI0GVjn4bEq9VO-gzGzoHsz","appKey":"s8xzIh2XvxyjRbyDXcL0vfPu","path":"window.location.pathname","placeholder":"请在这里输入评论","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":true,"serverURLs":"https://jpaxt7mv.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://ice-water.store/" target="_blank" rel="nofollow noopener"><span>小艺术家</span></a> <i class="iconfont icon-love"></i> <a href="https://ice-water.store/" target="_blank" rel="nofollow noopener"><span>版权所有</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/assets/mmedia/mmedia-loader.js"></script><!-- hexo injector body_end end --></body>
+</html>
